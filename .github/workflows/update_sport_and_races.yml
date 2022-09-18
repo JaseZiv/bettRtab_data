@@ -1,0 +1,37 @@
+name: Scrape available markets and race meets
+
+# At 22:01UTC daily (08:01 Melbourne time).
+on:
+  # push:
+  #   branches:
+  #     - main
+  schedule:
+    - cron: "1 22 * * *"
+
+jobs:
+  update-sports-and-meets:
+    runs-on: macOS-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      PROXY_URL: ${{ secrets.PROXY_URL }}
+      PROXY_PORT: ${{ secrets.PROXY_PORT }}
+      PROXY_USERNAME: ${{ secrets.PROXY_USERNAME }}
+      PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@master
+      - name: Package Installation
+        run: Rscript -e 'install.packages(c("remotes", "dplyr", "httr", "tidyr", "jsonlite", "lubridate"))'
+      - name: bettRtab Installation
+        run: Rscript -e 'remotes::install_github("JaseZiv/bettRtab")'
+      - name: Update markets
+        run: Rscript -e 'source(file.path("R", "get_sports.R"), echo = TRUE)'
+      - name: Update race meets
+        run: Rscript -e 'source(file.path("R", "race-meets", "get_race_meets_incremental.R"), echo = TRUE)'
+      - name: Commit
+        run: |
+          git config --global user.name 'JaseZiv'
+          git config --global user.email 'jaseziv83@gmail.com'
+          git add .
+          git commit -m 'updating sports and race meets' || echo "No changes to commit"
+          git push || echo "No changes to commit"
