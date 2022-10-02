@@ -28,7 +28,7 @@ for(i in b) {
 }
 
 all_data <- all_data %>%
-  select(-X_links.self, -X_links.selfTemplate, -X_links.competitions, -X_links.footytab)
+  select(-tidyr::any_of(c("X_links.self", "X_links.selfTemplate", "X_links.competitions", "X_links.footytab")))
 ## here, we want to do soemthing with the FALSE results - expand those out:
 which_to_change <- all_data$competitions.hasMarkets == TRUE
 
