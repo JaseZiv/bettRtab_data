@@ -22,6 +22,10 @@ existing_df <- readRDS("data/race-meets/2022/race_meets_meta_2022.rds")
 # (as typically there won't be today's race meet data available)
 dates <- seq(from = lubridate::ymd(max(existing_df$meetingDate))+1, to=lubridate::today()-1, by=1) %>% as.character()
 
+# it appears that Christmas day is a race-free day so we'll need to remove that day:
+dates <- dates[-grep("2022-12-25", dates)]
+
+
 
 # Start scraping loop -----------------------------------------------------
 
