@@ -16,14 +16,14 @@ Sys.setenv(TZ = "Australia/Melbourne")
 
 
 
-existing_df <- readRDS("data/race-meets/2022/race_meets_meta_2022.rds")
+existing_df <- readRDS("data/race-meets/2024/race_meets_meta_2024.rds")
 
 # now we want to get updated data - take te day after the latest last scrape, up to the day before today
 # (as typically there won't be today's race meet data available)
 dates <- seq(from = lubridate::ymd(max(existing_df$meetingDate))+1, to=lubridate::today()-1, by=1) %>% as.character()
 
 # it appears that Christmas day is a race-free day so we'll need to remove that day:
-dates <- dates[-grep("2022-12-25", dates)]
+# dates <- dates[-grep("2024-12-25", dates)]
 
 
 
@@ -33,6 +33,7 @@ race_meets <- data.frame()
 
 
 for(i in dates) {
+  Sys.sleep(2)
   print(paste("scraping date:", i))
   df <- bettRtab::get_race_meet_meta(i)
   race_meets <- dplyr::bind_rows(race_meets, df)
@@ -41,7 +42,7 @@ for(i in dates) {
 
 existing_df <- existing_df %>% dplyr::bind_rows(race_meets)
 
-saveRDS(existing_df, "data/race-meets/2022/race_meets_meta_2022.rds")
+saveRDS(existing_df, "data/race-meets/2024/race_meets_meta_2024.rds")
 
 rm(list = ls())
 
