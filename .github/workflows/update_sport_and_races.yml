@@ -26,8 +26,8 @@ jobs:
         run: Rscript -e 'remotes::install_github("JaseZiv/bettRtab")'
       - name: Update markets
         run: Rscript -e 'source(file.path("R", "get_sports.R"), echo = TRUE)'
-      - name: Update race meets
-        run: Rscript -e 'source(file.path("R", "race-meets", "get_race_meets_incremental.R"), echo = TRUE)'
+      # - name: Update race meets
+      #   run: Rscript -e 'source(file.path("R", "race-meets", "get_race_meets_incremental.R"), echo = TRUE)'
       - name: Commit
         run: |
           git config --global user.name 'JaseZiv'
