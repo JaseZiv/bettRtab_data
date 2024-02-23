@@ -4,17 +4,22 @@ library(dplyr)
 library(tidyr)
 
 
-params = list(
-  `jurisdiction` = 'VIC'
-)
-
 httr::set_config(httr::use_proxy(url = Sys.getenv("PROXY_URL"),
                                  port = as.numeric(Sys.getenv("PROXY_PORT")),
                                  username =Sys.getenv("PROXY_USERNAME"),
                                  password= Sys.getenv("PROXY_PASSWORD")))
 
 
-res <- httr::GET(url = 'https://api.beta.tab.com.au/v1/tab-info-service/sports', query = params)
+headers = c(
+  `User-Agent` = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+)
+
+params = list(
+  `jurisdiction` = "VIC"
+)
+
+res <- httr::GET(url = "https://api.beta.tab.com.au/v1/tab-info-service/sports", httr::add_headers(.headers=headers), query = params)
+
 
 a <- httr::content(res)
 b <- a$sports
