@@ -11,7 +11,12 @@ httr::set_config(httr::use_proxy(url = Sys.getenv("PROXY_URL"),
 
 
 headers = c(
-  `User-Agent` = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  `sec-ch-ua` = '"Chromium";v="128", "Not;A=Brand";v="24", "Google Chrome";v="128"',
+  Accept = "application/json, text/plain, */*",
+  Referer = "https://www.tab.com.au/",
+  `sec-ch-ua-mobile` = "?0",
+  `User-Agent` = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+  `sec-ch-ua-platform` = '"macOS"'
 )
 
 params = list(
