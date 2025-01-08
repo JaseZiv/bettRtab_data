@@ -10,7 +10,7 @@ on:
 
 jobs:
   update-sports-and-meets:
-    runs-on: macos-13
+    runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       PROXY_URL: ${{ secrets.PROXY_URL }}
