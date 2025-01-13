@@ -16,7 +16,7 @@ Sys.setenv(TZ = "Australia/Melbourne")
 
 
 
-existing_df <- readRDS("data/race-meets/2024/race_meets_meta_2024.rds")
+existing_df <- readRDS("data/race-meets/2024/race_meets_meta_2025.rds")
 
 # now we want to get updated data - take te day after the latest last scrape, up to the day before today
 # (as typically there won't be today's race meet data available)
@@ -42,7 +42,7 @@ for(i in dates) {
 
 existing_df <- existing_df %>% dplyr::bind_rows(race_meets)
 
-saveRDS(existing_df, "data/race-meets/2024/race_meets_meta_2024.rds")
+saveRDS(existing_df, "data/race-meets/2025/race_meets_meta_2025.rds")
 
 rm(list = ls())
 
